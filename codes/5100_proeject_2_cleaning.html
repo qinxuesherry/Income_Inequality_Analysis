@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Income Inequality</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Income Inequality_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Income Inequality_files/libs/quarto-html/quarto.js"></script>
+<script src="Income Inequality_files/libs/quarto-html/popper.min.js"></script>
+<script src="Income Inequality_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Income Inequality_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Income Inequality_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Income Inequality_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Income Inequality_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Income Inequality_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Income Inequality_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Income Inequality</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="data-gathering" class="level2">
+<h2 class="anchored" data-anchor-id="data-gathering">Data Gathering</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"Income_Inequality.csv"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>(<span class="fu">head</span>(df))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Country Countrycode3 Countrycode2 Year Population         Incomegroup
+1 Afghanistan          AFG           AF 2007  26.911530          Low income
+2 Afghanistan          AFG           AF 2008  27.658890          Low income
+3     Albania          ALB           AL 1996   3.092034 Upper middle income
+4     Albania          ALB           AL 2002   3.123112 Upper middle income
+5     Albania          ALB           AL 2005   3.082172 Upper middle income
+6     Albania          ALB           AL 2008   2.968026 Upper middle income
+      Mean  Median  Gini                                     Source   D1   D2
+1 36588.00      NA 29.00 National Risk and Vulnerability Assessment   NA   NA
+2       NA      NA 27.80                                 World Bank   NA   NA
+3 58192.80      NA 28.00        Deininger &amp; Squire, World Bank 2004 3.68 5.02
+4  2256.96 1861.68 31.74                            World Bank 2016 3.49 4.86
+5  2605.92 2217.48 30.60                            World Bank 2016 3.48 4.92
+6  2850.24 2385.12 29.98                            World Bank 2016 3.73 5.14
+    D3   D4   D5   D6    D7    D8    D9   D10   Q1    Q2    Q3    Q4    Q5 P5
+1   NA   NA   NA   NA    NA    NA    NA    NA 9.00 13.00 17.00 22.00 39.00 NA
+2   NA   NA   NA   NA    NA    NA    NA    NA 9.40 13.61 17.37 22.14 37.48 NA
+3 6.01 7.02 8.06 9.11 10.64 12.54 15.12 22.80 8.70 13.03 17.16 23.18 37.92 NA
+4 5.84 6.74 7.65 8.84 10.23 11.98 14.93 25.44 8.35 12.58 16.49 22.21 40.37 NA
+5 5.98 6.92 7.99 9.04 10.37 12.13 14.83 24.34 8.40 12.90 17.03 22.50 39.17 NA
+6 6.09 6.98 7.91 8.92 10.30 11.93 14.54 24.46 8.87 13.07 16.83 22.23 39.00 NA
+  P95 Revision Quality                                  Source_Comments Region
+1  NA New 2013    High European commision and Government of Afghanistan   Asia
+2  NA New 2013 Average                World Development Indicators 2013   Asia
+3  NA          Average                    Employment and Welfare Survey Europe
+4  NA New 2017 Average                                        PovcalNet Europe
+5  NA New 2017 Average                                        PovcalNet Europe
+6  NA New 2017 Average                                        PovcalNet Europe
+       Region_sub   Currency Reference_Period        Welfaredefn  IncSharU
+1   Southern Asia         AF            Month        Consumption Household
+2   Southern Asia                             Income/consumption          
+3 Southern Europe       Leke            Month        Consumption Household
+4 Southern Europe US$2011PPP             Year        Consumption Household
+5 Southern Europe US$2011PPP             Year        Consumption Household
+6 Southern Europe US$2011PPP             Year        Consumption Household
+  UofAnala    Equivsc         AreaCovr PopCovr AgeCovr     EU     OECD
+1   Person Per capita              All     All     All Non-EU Non-OECD
+2                                  All     All     All Non-EU Non-OECD
+3   Person Per capita All, excl Tirana     All     All Non-EU Non-OECD
+4   Person Per capita              All     All     All Non-EU Non-OECD
+5   Person Per capita              All     All     All Non-EU Non-OECD
+6   Person Per capita              All     All     All Non-EU Non-OECD
+   Year_cat Welfaredefn_new          Equivsc_new AgeCovr_new AreaCovr_new
+1 2000-2009     Consumption Household per capita         All          All
+2 2000-2009           Other                              All          All
+3 1990-1999     Consumption Household per capita         All        Other
+4 2000-2009     Consumption Household per capita         All          All
+5 2000-2009     Consumption Household per capita         All          All
+6 2000-2009     Consumption Household per capita         All          All
+  PopCovr_new IncSharU_new UofAnala_new Exchangerate Mean_usd Median_usd
+1         All    Household       Person     49.96202   732.32         NA
+2         All                                     NA       NA         NA
+3         All    Household       Person    104.49892   556.87         NA
+4         All    Household       Person      1.00000       NA         NA
+5         All    Household       Person      1.00000       NA         NA
+6         All    Household       Person      1.00000       NA         NA</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>(<span class="fu">summary</span>(df))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Country          Countrycode3       Countrycode2            Year     
+ Length:8817        Length:8817        Length:8817        Min.   :1867  
+ Class :character   Class :character   Class :character   1st Qu.:1985  
+ Mode  :character   Mode  :character   Mode  :character   Median :1996  
+                                                          Mean   :1993  
+                                                          3rd Qu.:2006  
+                                                          Max.   :2015  
+                                                                        
+   Population        Incomegroup             Mean              Median        
+ Min.   :   0.0639   Length:8817        Min.   :       0   Min.   :       1  
+ 1st Qu.:   5.0865   Class :character   1st Qu.:    3354   1st Qu.:    2649  
+ Median :  12.6439   Mode  :character   Median :   10673   Median :    8158  
+ Mean   :  70.1270                      Mean   :  420950   Mean   :  245246  
+ 3rd Qu.:  47.1271                      3rd Qu.:   29935   3rd Qu.:   20156  
+ Max.   :1362.5143                      Max.   :48271000   Max.   :45446400  
+ NA's   :236                            NA's   :4342       NA's   :5979      
+      Gini         Source                D1              D2       
+ Min.   :12.1   Length:8817        Min.   :0.000   Min.   :0.200  
+ 1st Qu.:30.7   Class :character   1st Qu.:1.300   1st Qu.:2.600  
+ Median :38.2   Mode  :character   Median :2.020   Median :3.530  
+ Mean   :39.3                      Mean   :2.235   Mean   :3.681  
+ 3rd Qu.:47.9                      3rd Qu.:3.120   3rd Qu.:4.800  
+ Max.   :78.6                      Max.   :7.000   Max.   :7.600  
+ NA's   :35                        NA's   :3811    NA's   :3828   
+       D3              D4              D5               D6        
+ Min.   :0.500   Min.   :0.800   Min.   : 0.100   Min.   : 2.700  
+ 1st Qu.:3.550   1st Qu.:4.560   1st Qu.: 5.670   1st Qu.: 7.000  
+ Median :4.600   Median :5.640   Median : 6.800   Median : 8.110  
+ Mean   :4.702   Mean   :5.699   Mean   : 6.766   Mean   : 8.009  
+ 3rd Qu.:5.900   3rd Qu.:6.900   3rd Qu.: 7.990   3rd Qu.: 9.100  
+ Max.   :8.100   Max.   :9.600   Max.   :10.800   Max.   :12.000  
+ NA's   :3828    NA's   :3828    NA's   :3808     NA's   :3803    
+       D7               D8              D9             D10       
+ Min.   : 4.240   Min.   : 6.25   Min.   : 8.00   Min.   :15.70  
+ 1st Qu.: 8.800   1st Qu.:11.34   1st Qu.:14.70   1st Qu.:24.70  
+ Median : 9.780   Median :11.90   Median :15.50   Median :31.41  
+ Mean   : 9.577   Mean   :11.74   Mean   :15.45   Mean   :32.20  
+ 3rd Qu.:10.460   3rd Qu.:12.20   3rd Qu.:16.20   3rd Qu.:39.00  
+ Max.   :13.900   Max.   :17.90   Max.   :24.00   Max.   :70.24  
+ NA's   :3797     NA's   :3800    NA's   :3786    NA's   :3745   
+       Q1               Q2              Q3              Q4       
+ Min.   : 0.200   Min.   : 1.30   Min.   : 4.20   Min.   :10.60  
+ 1st Qu.: 3.947   1st Qu.: 8.20   1st Qu.:12.80   1st Qu.:20.30  
+ Median : 5.800   Median :10.50   Median :15.20   Median :21.80  
+ Mean   : 5.998   Mean   :10.50   Mean   :14.89   Mean   :21.43  
+ 3rd Qu.: 7.980   3rd Qu.:12.82   3rd Qu.:17.10   3rd Qu.:22.70  
+ Max.   :14.600   Max.   :17.70   Max.   :22.80   Max.   :31.80  
+ NA's   :3053     NA's   :3213    NA's   :3187    NA's   :3181   
+       Q5              P5              P95          Revision        
+ Min.   :26.80   Min.   : 0.100   Min.   : 9.10   Length:8817       
+ 1st Qu.:39.51   1st Qu.: 0.833   1st Qu.:13.70   Class :character  
+ Median :46.33   Median : 1.165   Median :16.40   Mode  :character  
+ Mean   :47.19   Mean   : 1.268   Mean   :19.09                     
+ 3rd Qu.:54.60   3rd Qu.: 1.400   3rd Qu.:22.34                     
+ Max.   :81.40   Max.   :33.700   Max.   :60.00                     
+ NA's   :3050    NA's   :8079     NA's   :7526                      
+   Quality          Source_Comments       Region           Region_sub       
+ Length:8817        Length:8817        Length:8817        Length:8817       
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+   Currency         Reference_Period   Welfaredefn          IncSharU        
+ Length:8817        Length:8817        Length:8817        Length:8817       
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+   UofAnala           Equivsc            AreaCovr           PopCovr         
+ Length:8817        Length:8817        Length:8817        Length:8817       
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+   AgeCovr               EU                OECD             Year_cat        
+ Length:8817        Length:8817        Length:8817        Length:8817       
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+ Welfaredefn_new    Equivsc_new        AgeCovr_new        AreaCovr_new      
+ Length:8817        Length:8817        Length:8817        Length:8817       
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+ PopCovr_new        IncSharU_new       UofAnala_new        Exchangerate    
+ Length:8817        Length:8817        Length:8817        Min.   :      0  
+ Class :character   Class :character   Class :character   1st Qu.:      1  
+ Mode  :character   Mode  :character   Mode  :character   Median :      1  
+                                                          Mean   :  21341  
+                                                          3rd Qu.:      8  
+                                                          Max.   :3402003  
+                                                          NA's   :4915     
+    Mean_usd           Median_usd      
+ Min.   :     11.6   Min.   :       0  
+ 1st Qu.:    912.6   1st Qu.:    4080  
+ Median :   3287.1   Median :   13127  
+ Mean   :  13157.4   Mean   :   39876  
+ 3rd Qu.:  17369.7   3rd Qu.:   24431  
+ Max.   :1192857.5   Max.   :11021790  
+ NA's   :6347        NA's   :7604      </code></pre>
+</div>
+</div>
+</section>
+<section id="data-cleaning" class="level2">
+<h2 class="anchored" data-anchor-id="data-cleaning">Data Cleaning</h2>
+<p>Drop columns that not meaningful (Or mostly NA)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">select</span>(df, <span class="sc">-</span><span class="fu">c</span>(Countrycode3, Countrycode2, P5, P95, Revision, AreaCovr, PopCovr, AgeCovr, Welfaredefn, Mean_usd, Median_usd, Exchangerate, Equivsc, UofAnala, IncSharU, ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Add sum of Decile and Quintile Dsum</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>sum_D1_to_D10 <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(df[, <span class="fu">c</span>(<span class="st">"D1"</span>, <span class="st">"D2"</span>, <span class="st">"D3"</span>, <span class="st">"D4"</span>, <span class="st">"D5"</span>, <span class="st">"D6"</span>, <span class="st">"D7"</span>, <span class="st">"D8"</span>, <span class="st">"D9"</span>, <span class="st">"D10"</span>)])</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>sum_Q1_to_Q5 <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(df[, <span class="fu">c</span>(<span class="st">"Q1"</span>, <span class="st">"Q2"</span>, <span class="st">"Q3"</span>, <span class="st">"Q4"</span>, <span class="st">"Q5"</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Drop rows where the population coverage is not all, then drop column PopCovr_new</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df[df<span class="sc">$</span>PopCovr_new <span class="sc">==</span> <span class="st">"All"</span>, ]</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># df &lt;- subset(df, select = -c(PopCovr_new, AgeCovr_new, sum_D1_to_D10, sum_Q1_to_Q5))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The <code>echo: false</code> option disables the printing of code (only output is displayed).</p>
+<p>assign NA to all blank space</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">lapply</span>(df, <span class="cf">function</span>(x) <span class="fu">ifelse</span>(x <span class="sc">==</span> <span class="st">""</span>, <span class="cn">NA</span>, x))</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>assign missing value for all categorical NAs</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Country) <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Currency =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(Currency), </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">first</span>(Currency[<span class="sc">!</span><span class="fu">is.na</span>(Currency)]),</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>                           Currency))</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Country) <span class="sc">%&gt;%</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Reference_Period =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(Reference_Period), </span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">first</span>(Reference_Period[<span class="sc">!</span><span class="fu">is.na</span>(Reference_Period)]),</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>                           Reference_Period))</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Country) <span class="sc">%&gt;%</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Equivsc_new =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(Equivsc_new), </span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">first</span>(Equivsc_new[<span class="sc">!</span><span class="fu">is.na</span>(Equivsc_new)]),</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>                           Equivsc_new))</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Country) <span class="sc">%&gt;%</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">IncSharU_new =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(IncSharU_new), </span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">first</span>(IncSharU_new[<span class="sc">!</span><span class="fu">is.na</span>(IncSharU_new)]),</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>                           IncSharU_new))</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Country) <span class="sc">%&gt;%</span></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">UofAnala_new =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(UofAnala_new), </span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">first</span>(UofAnala_new[<span class="sc">!</span><span class="fu">is.na</span>(UofAnala_new)]),</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>                           UofAnala_new))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Country               Year        Population        Incomegroup       
+ Length:7628        Min.   :1890   Min.   :   0.0639   Length:7628       
+ Class :character   1st Qu.:1988   1st Qu.:   5.1713   Class :character  
+ Mode  :character   Median :1998   Median :  13.8273   Mode  :character  
+                    Mean   :1995   Mean   :  75.7780                     
+                    3rd Qu.:2007   3rd Qu.:  50.3891                     
+                    Max.   :2015   Max.   :1362.5143                     
+                                   NA's   :111                           
+      Mean              Median              Gini          Source         
+ Min.   :       0   Min.   :       1   Min.   :12.10   Length:7628       
+ 1st Qu.:    3537   1st Qu.:    2770   1st Qu.:31.30   Class :character  
+ Median :   10966   Median :    8059   Median :39.00   Mode  :character  
+ Mean   :  445451   Mean   :  253199   Mean   :39.83                     
+ 3rd Qu.:   29698   3rd Qu.:   19731   3rd Qu.:48.40                     
+ Max.   :48271000   Max.   :45446400   Max.   :78.60                     
+ NA's   :3428       NA's   :4918       NA's   :35                        
+       D1             D2              D3              D4       
+ Min.   :0.00   Min.   :0.200   Min.   :0.500   Min.   :0.800  
+ 1st Qu.:1.30   1st Qu.:2.600   1st Qu.:3.530   1st Qu.:4.540  
+ Median :2.04   Median :3.530   Median :4.600   Median :5.610  
+ Mean   :2.24   Mean   :3.681   Mean   :4.702   Mean   :5.697  
+ 3rd Qu.:3.12   3rd Qu.:4.800   3rd Qu.:5.900   3rd Qu.:6.910  
+ Max.   :7.00   Max.   :7.600   Max.   :8.100   Max.   :9.600  
+ NA's   :2881   NA's   :2896    NA's   :2903    NA's   :2903   
+       D5               D6               D7              D8       
+ Min.   : 1.500   Min.   : 2.700   Min.   : 4.24   Min.   : 6.25  
+ 1st Qu.: 5.650   1st Qu.: 7.000   1st Qu.: 8.80   1st Qu.:11.34  
+ Median : 6.800   Median : 8.100   Median : 9.73   Median :11.89  
+ Mean   : 6.764   Mean   : 7.996   Mean   : 9.55   Mean   :11.71  
+ 3rd Qu.: 7.990   3rd Qu.: 9.100   3rd Qu.:10.43   3rd Qu.:12.20  
+ Max.   :10.800   Max.   :12.000   Max.   :12.45   Max.   :16.30  
+ NA's   :2903     NA's   :2903     NA's   :2903    NA's   :2903   
+       D9             D10              Q1               Q2       
+ Min.   : 8.00   Min.   :15.70   Min.   : 0.300   Min.   : 1.30  
+ 1st Qu.:14.71   1st Qu.:24.69   1st Qu.: 3.915   1st Qu.: 8.20  
+ Median :15.50   Median :31.47   Median : 5.785   Median :10.49  
+ Mean   :15.44   Mean   :32.22   Mean   : 5.972   Mean   :10.49  
+ 3rd Qu.:16.20   3rd Qu.:39.11   3rd Qu.: 7.930   3rd Qu.:12.83  
+ Max.   :24.00   Max.   :70.24   Max.   :14.600   Max.   :17.70  
+ NA's   :2893    NA's   :2873    NA's   :2212     NA's   :2311   
+       Q3              Q4              Q5          Quality         
+ Min.   : 4.20   Min.   :10.60   Min.   :26.80   Length:7628       
+ 1st Qu.:12.80   1st Qu.:20.28   1st Qu.:39.60   Class :character  
+ Median :15.12   Median :21.80   Median :46.50   Mode  :character  
+ Mean   :14.88   Mean   :21.38   Mean   :47.27                     
+ 3rd Qu.:17.10   3rd Qu.:22.67   3rd Qu.:54.72                     
+ Max.   :22.80   Max.   :31.50   Max.   :81.40                     
+ NA's   :2311    NA's   :2311    NA's   :2223                      
+ Source_Comments       Region           Region_sub          Currency        
+ Length:7628        Length:7628        Length:7628        Length:7628       
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+ Reference_Period        EU                OECD             Year_cat        
+ Length:7628        Length:7628        Length:7628        Length:7628       
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+ Welfaredefn_new    Equivsc_new        AgeCovr_new        AreaCovr_new      
+ Length:7628        Length:7628        Length:7628        Length:7628       
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+ PopCovr_new        IncSharU_new       UofAnala_new       sum_D1_to_D10   
+ Length:7628        Length:7628        Length:7628        Min.   : 97.00  
+ Class :character   Class :character   Class :character   1st Qu.: 99.99  
+ Mode  :character   Mode  :character   Mode  :character   Median :100.00  
+                                                          Mean   :100.00  
+                                                          3rd Qu.:100.01  
+                                                          Max.   :103.00  
+                                                          NA's   :2906    
+  sum_Q1_to_Q5 
+ Min.   : 97   
+ 1st Qu.:100   
+ Median :100   
+ Mean   :100   
+ 3rd Qu.:100   
+ Max.   :103   
+ NA's   :2311  </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(df<span class="sc">$</span>Currency))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 19</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(df))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         Country             Year       Population      Incomegroup 
+               0                0              111               46 
+            Mean           Median             Gini           Source 
+            3428             4918               35               14 
+              D1               D2               D3               D4 
+            2881             2896             2903             2903 
+              D5               D6               D7               D8 
+            2903             2903             2903             2903 
+              D9              D10               Q1               Q2 
+            2893             2873             2212             2311 
+              Q3               Q4               Q5          Quality 
+            2311             2311             2223                0 
+ Source_Comments           Region       Region_sub         Currency 
+            2479                0                0               19 
+Reference_Period               EU             OECD         Year_cat 
+              19                0                0                0 
+ Welfaredefn_new      Equivsc_new      AgeCovr_new     AreaCovr_new 
+               0                4                0                0 
+     PopCovr_new     IncSharU_new     UofAnala_new    sum_D1_to_D10 
+               0                4                0             2906 
+    sum_Q1_to_Q5 
+            2311 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(df, <span class="st">"Income_Inequality_clean.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

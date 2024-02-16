@@ -1,0 +1,120 @@
+---
+title: "5100_project"
+output: html_document
+date: "2023-11-21"
+---
+```{r}
+df=read.csv('Income_Inequality_clean.csv')
+```
+```{r}
+library(dplyr)
+```
+
+# Region and quintile of Income
+```{r}
+ region_df<- df %>%
+  select(Region, Q1,Q2,Q3,Q4,Q5)%>%
+  group_by(Region) 
+```
+
+```{r}
+region_df
+```
+```{r}
+asia <- subset(region_df, Region == "Asia")
+europe <- subset(region_df, Region == "Europe")
+americas <- subset(region_df, Region == "Americas")
+africa <- subset(region_df, Region == "Africa")
+```
+
+```{r}
+q5 <- list(asia$Q5,europe$Q5,americas$Q5,africa$Q5)
+boxplot(q5,names=c('Aisa','Europe','Americas','Africa'),main= 'Upper quintile of Incomes',col = '#ec6337',xlab = "Countries", ylab = "Quintile 5")
+```
+
+ As shown, in Africa those 20% percentage of people has larger income share
+```{r}
+summary(asia$Q5)
+```
+
+```{r}
+summary(europe$Q5)
+```
+
+
+```{r}
+summary(americas$Q5)
+```
+
+```{r}
+summary(africa$Q5)
+```
+```{r}
+summary(asia$Q5)
+summary(europe$Q5)
+summary(americas$Q5)
+summary(africa$Q5)
+```
+
+
+
+```{r}
+q1 <- list(asia$Q1,europe$Q1,americas$Q1,africa$Q1)
+boxplot(q1,names=c('Aisa','Europe','Americas','Africa'),main= 'Lower quintile of Incomes',col = '#ec6337',xlab = "Countries", ylab = "Quintile 1")
+```
+```{r}
+summary(asia$Q1)
+summary(europe$Q1)
+summary(americas$Q1)
+summary(africa$Q1)
+```
+
+# Null hypothesis
+
+
+H0: Americas's upper quintile poupulation of income shares = Asia's upper quintile population of income shares
+
+
+Ha: Americas's upper quintile poupulation of income shares > Asia's upper quintile population of income shares
+
+# t test
+```{r}
+asia_q5= subset(asia, select=Q5, drop=T)
+americas_q5= subset(americas, select=Q5, drop=T)
+t.test(americas_q5,asia_q5, alt="greater",conf.level=.95)
+```
+
+# bootstrap
+```{r}
+# Perform a bootstrap test for ratio of means of Q5
+set.seed(1000)
+N <- 10000
+ratio_mean_boot <- numeric(N) 
+
+for (i in 1:N)
+{
+americas_sample <- sample(americas_q5, length(americas_q5), replace = TRUE) 
+asia_sample <- sample(asia_q5, length(asia_q5), replace = TRUE)
+ratio_mean_boot[i] <- mean(americas_sample) / mean(asia_sample)
+}
+boot_mean<- mean(ratio_mean_boot)
+cat("Bootstrap Mean:",boot_mean, "\n")
+# one tail
+confidence_interval<- quantile(ratio_mean_boot, 0.05)
+cat("Bootstrap 95% Confidence Interval for the Mean:", confidence_interval, "\n")
+bootstrap_variance = var(ratio_mean_boot)
+cat("Bootstrap variance for the Mean:",bootstrap_variance, "\n")
+```
+
+```{r}
+# one tail
+quantile(ratio_mean_boot, 0.05)
+```
+```{r}
+bootstrap_variance = var(ratio_mean_boot)
+bootstrap_variance
+```
+Vairance is a small value like 3.736707e-05 suggests a relatively stable estimate.
+
+Since 1 is not in the 95% bootstrap confidence bound,reject the null hypothesis.
+So, we can conclude that America's upper quintile population of income shares Asia's upper quintile population of income shares. which means 20% of America people has higher income percentage than the Asias. Which means, the wealthy people in America control comparably more money than wealthy people in Asia.
